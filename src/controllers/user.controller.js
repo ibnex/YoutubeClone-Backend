@@ -3,17 +3,21 @@ import { ApiError } from '../utils/ApiError.js';
 import { User } from "../models/user.model.js";
 import { UploadOnCouldniry } from '../utils/cloudinary.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
+// import {generateAccessToken} from '../models/user.model.js'
+// import {generateRefreshToken} from '../models/user.model.js'
+// import {isPasswordCorrect} from '../models/user.model.js'
+
 
 
 
 
 const generateAccessAndrefreshTokens = async (userId) => {
     try {
-        const user = await User.findById(userId).exec();
+        const user = await User.findById(userId);
       
-        const accessToken = user.generateAccessToken();
+        const accessToken =await user.generateAccessToken();
       
-        const refreshToken = user.generateRefreshToken();
+        const refreshToken =await user.generateRefreshToken();
        
 
         user.refreshToken = refreshToken;
@@ -116,7 +120,6 @@ const loginUser = asyncHandler(async (req, res) => {
     }
 
    
-
     const isPasswordValid = await user.isPasswordCorrect(password)
     
 
